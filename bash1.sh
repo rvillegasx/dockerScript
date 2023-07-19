@@ -9,6 +9,11 @@ docker run --rm -d -p 8080:80 --name myHttpd httpd
 docker cp ./hostit-html/. myHttpd:/usr/local/apache2/htdocs/
 rm -rf hostit-html > /dev/null 2>&1
 docker run -d --name mySqlDB -e MYSQL_ROOT_PASSWORD=secret mysql
-docker exec -it myHttpd apt-get update
-docker exec -it myHttpd apt-get install -y iputils-ping
-docker exec -it myHttpd ping -c 1 172.17.0.3
+docker exec -it myHttpd apt-get update > /dev/null 2>&1
+docker exec -it myHttpd apt-get install -y iputils-ping > /dev/null 2>&1
+if docker exec -it myHttpd ping -c 1 172.17.0.3 | grep -q '64 bytes'
+then
+    echo "mysql is connected"
+else
+    echo "mysql is down"
+fi
