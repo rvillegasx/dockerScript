@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+    mysql:
+        restart: always
+        image: mysql
+        container_name: mySqlDB
+        environment:
+            MYSQL_ROOT_PASSWORD: secret
+        ports:
+            - "3306:3306"
+        networks:
+            - bash2
+
+    httpd:
+        restart: always
+        image: httpd
+        container_name: myHttpd
+        links:
+            - mysql
+        ports:
+            - 8080:80
+        networks:
+            - bash2
+networks:
+    bash2:
+        driver: bridge
+        name: bash2_network
