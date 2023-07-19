@@ -8,7 +8,7 @@ then
     docker stop mySqlDB > /dev/null 2>&1
     docker rm myHttpd > /dev/null 2>&1
     docker rm mySqlDB > /dev/null 2>&1
-    docker run --rm -d -p 8080:80 --name myHttpd --net bash1 httpd
+    docker run -d -p 8080:80 --name myHttpd --net bash1 httpd
     unzip hostit.zip
     docker run -d --name mySqlDB -e MYSQL_ROOT_PASSWORD=secret --net bash1 mysql
     docker cp ./hostit-html/. myHttpd:/usr/local/apache2/htdocs/
